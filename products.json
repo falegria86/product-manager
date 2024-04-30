@@ -1,0 +1,92 @@
+[
+    {
+        "id": 1,
+        "title": "queso",
+        "description": "producto lácteo",
+        "price": 8,
+        "thumbnail": "Sin imagen",
+        "code": "456",
+        "stock": 30
+    },
+    {
+        "id": 2,
+        "title": "yogur",
+        "description": "producto lácteo fermentado",
+        "price": 5,
+        "thumbnail": "Sin imagen",
+        "code": "789",
+        "stock": 20
+    },
+    {
+        "id": 3,
+        "title": "mantequilla",
+        "description": "producto lácteo sólido",
+        "price": 10,
+        "thumbnail": "Sin imagen",
+        "code": "101",
+        "stock": 25
+    },
+    {
+        "id": 4,
+        "title": "helado",
+        "description": "postre congelado",
+        "price": 15,
+        "thumbnail": "Sin imagen",
+        "code": "202",
+        "stock": 40
+    },
+    {
+        "id": 5,
+        "title": "natillas",
+        "description": "postre lácteo",
+        "price": 6,
+        "thumbnail": "Sin imagen",
+        "code": "303",
+        "stock": 15
+    },
+    {
+        "id": 6,
+        "title": "leche de almendras",
+        "description": "bebida vegetal",
+        "price": 14,
+        "thumbnail": "Sin imagen",
+        "code": "404",
+        "stock": 35
+    },
+    {
+        "id": 7,
+        "title": "crema de leche",
+        "description": "producto lácteo para cocinar",
+        "price": 7,
+        "thumbnail": "Sin imagen",
+        "code": "505",
+        "stock": 28
+    },
+    {
+        "id": 8,
+        "title": "batido de fresa",
+        "description": "bebida láctea con fruta",
+        "price": 9,
+        "thumbnail": "Sin imagen",
+        "code": "606",
+        "stock": 22
+    },
+    {
+        "id": 9,
+        "title": "requesón",
+        "description": "tipo de queso fresco",
+        "price": 11,
+        "thumbnail": "Sin imagen",
+        "code": "707",
+        "stock": 18
+    },
+    {
+        "id": 10,
+        "title": "leche",
+        "description": "lácteo",
+        "price": 12,
+        "thumbnail": "Sin imagen",
+        "code": "123",
+        "stock": 50
+    }
+]
