@@ -1,48 +1,15 @@
 import fs from "fs";
+import { v4 as uuidv4 } from "uuid";
 
 export default class ProductManager {
     constructor(path) {
         this.path = path;
     }
 
-    // Función para obtener el ID más alto
-    async #getMaxId() {
-        try {
-            const products = await this.getProducts();
-            if (products.length > 0) {
-                const maxId = Math.max(...products.map(product => product.id));
-                return maxId + 1;
-            } else {
-                return 1; // Si no hay productos, asignamos el 1 como el primer ID
-            }
-        } catch (error) {
-            console.log('Error getting Max ID: ', error);
-        }
-    }
-
     async addProduct(productObj) {
-        const { title, description, price, thumbnail, code, stock } = productObj;
-
-        // Validamos que vengan todos los campos requeridos
-        if (!title || !description || !price || !thumbnail || !code || !stock) {
-            return 'All fields must be provided!';
-        }
-
-        // Validamos que el precio sea un número
-        if (isNaN(Number(price))) {
-            return 'Price must be a number!';
-        }
-
-        // Validamos que el stock sea un número
-        if (isNaN(Number(stock))) {
-            return 'Stock must be a number!';
-        }
-
         try {
-            const maxId = await this.#getMaxId();
-            console.log("MaxID: ", maxId)
             const product = {
-                id: maxId,
+                id: uuidv4(),
                 ...productObj,
             };
 
@@ -68,8 +35,14 @@ export default class ProductManager {
                 const productsFile = await fs.promises.readFile(this.path, 'utf-8');
                 const products = JSON.parse(productsFile);
 
-                const productsLimit = products.slice(0, limit);
-                return productsLimit;
+                // Si limit no es undefined
+                if (limit) {
+                    const productsLimit = products.slice(0, limit);
+                    return productsLimit;
+                } else {
+                    //En caso que no se envíe limit, vendrá como undefined y regresamos todos los productos
+                    return products;
+                }
             } else {
                 return [];
             }
@@ -80,66 +53,63 @@ export default class ProductManager {
 
     async getProductById(id) {
         try {
-            const idNumber = +id; // Convertimos id a número
             const products = await this.getProducts();
-            const product = products.find(product => product.id === idNumber);
+            const product = products.find(product => product.id === id);
 
             if (product) {
                 return product;
             } else {
-                return { error: `Product with ID ${id} doesn't exist!`};
+                return { error: `Product with ID ${id} doesn't exist!` };
             }
         } catch (error) {
             console.log(`Error getting product with ID: ${id} ${error}`)
         }
     }
 
-    // async updateProduct(id, update) {
-    //     // Validación para rechazar si se quiere actualizar el ID
-    //     if (update.id) {
-    //         console.log("ID cannot be updated!");
-    //         return false;
-    //     }
+    async updateProduct(pid, update) {
+        //Obtenemos todos los campos que vengan para actualizar y separamos el id para no actualizarlo
+        const { id, ...updateFields } = update;
 
-    //     try {
-    //         if (fs.existsSync(this.path)) {
-    //             const products = await this.getProducts();
-    //             const productToUpdate = products.find(product => product.id === id);
-    //             const newProducts = products.filter(product => product.id !== id);
-    //             const updatedProduct = {
-    //                 ...productToUpdate,
-    //                 ...update,
-    //             }
+        try {
+            if (fs.existsSync(this.path)) {
+                const products = await this.getProducts();
+                const productToUpdate = products.find(product => product.id === pid);
+                const newProducts = products.filter(product => product.id !== pid);
 
-    //             newProducts.push(updatedProduct);
-    //             await fs.promises.writeFile(this.path, JSON.stringify(newProducts));
+                const updatedProduct = {
+                    ...productToUpdate,
+                    ...updateFields,
+                }
 
-    //             return updatedProduct;
-    //         }
-    //     } catch (error) {
-    //         console.error('Error when updating product: ', error);
-    //     }
-    // }
+                newProducts.push(updatedProduct);
+                await fs.promises.writeFile(this.path, JSON.stringify(newProducts));
 
-    // async deleteProduct(id) {
-    //     try {
-    //         if (fs.existsSync(this.path)) {
+                return updatedProduct;
+            }
+        } catch (error) {
+            console.error('Error when updating product: ', error);
+        }
+    }
 
-    //             const products = await this.getProducts();
-    //             const deletedProduct = products.find(product => product.id === id);
+    async deleteProduct(id) {
+        try {
+            if (fs.existsSync(this.path)) {
 
-    //             if (!deletedProduct) {
-    //                 return `Product with ID ${id} wasn't found`;
-    //             }
-    //             const newProducts = products.filter(product => product.id !== id);
+                const products = await this.getProducts();
+                const deletedProduct = products.find(product => product.id === id);
 
-    //             await fs.promises.writeFile(this.path, JSON.stringify(newProducts));
-    //             return deletedProduct;
-    //         } else {
-    //             return `There's no products yet!`
-    //         }
-    //     } catch (error) {
-    //         console.log(`Error when trying to delete product with ID: ${id} ${error}`);
-    //     }
-    // }
+                if (!deletedProduct) {
+                    return `Product with ID ${id} wasn't found`;
+                }
+                const newProducts = products.filter(product => product.id !== id);
+
+                await fs.promises.writeFile(this.path, JSON.stringify(newProducts));
+                return deletedProduct;
+            } else {
+                return `There's no products yet!`
+            }
+        } catch (error) {
+            console.log(`Error when trying to delete product with ID: ${id} ${error}`);
+        }
+    }
 }
