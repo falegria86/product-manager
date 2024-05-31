@@ -1,6 +1,7 @@
 import express from "express";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
+import "./daos/mongodb/connection.js";
 
 const app = express();
 

@@ -6,7 +6,7 @@ export default class ProductManager {
         this.path = path;
     }
 
-    async addProduct(productObj) {
+    async create(productObj) {
         try {
             const product = {
                 id: uuidv4(),
@@ -29,7 +29,7 @@ export default class ProductManager {
         }
     }
 
-    async getProducts(limit) {
+    async getAll(limit) {
         try {
             if (fs.existsSync(this.path)) {
                 const productsFile = await fs.promises.readFile(this.path, 'utf-8');
@@ -51,7 +51,7 @@ export default class ProductManager {
         }
     }
 
-    async getProductById(id) {
+    async getById(id) {
         try {
             const products = await this.getProducts();
             const product = products.find(product => product.id === id);
@@ -66,7 +66,7 @@ export default class ProductManager {
         }
     }
 
-    async updateProduct(pid, update) {
+    async update(pid, update) {
         //Obtenemos todos los campos que vengan para actualizar y separamos el id para no actualizarlo
         const { id, ...updateFields } = update;
 
@@ -91,7 +91,7 @@ export default class ProductManager {
         }
     }
 
-    async deleteProduct(id) {
+    async remove(id) {
         try {
             if (fs.existsSync(this.path)) {
 
