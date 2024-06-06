@@ -71,14 +71,14 @@ export const addProductToCart = async (cartId, prodId) => {
     }
 }
 
-export const removeProductFromCart = async (cartId, prodId) => {
+export const removeProductFromCart = async (idCart, idProduct) => {
     try {
-        const cartExists = await getByCartId(cartId);
-        const productExists = cartExists.products.find(p => p.product._id.toString() === prodId);
+        const cartExists = await getByCartId(idCart);
+        const productExists = cartExists.products.find(product => product.product._id.toString() === idProduct);
 
         if (!cartExists || !productExists) return null;
 
-        return await cartDao.removeProductFromCart(cartId, prodId);
+        return await cartDao.removeProductFromCart(idCart, idProduct);
     } catch (error) {
         throw new Error(error);
     }

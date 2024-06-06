@@ -85,7 +85,7 @@ export const addProductToCart = async (req, res, next) => {
     }
 };
 
-export const removeProducFromCart = async (req, res, next) => {
+export const removeProductFromCart = async (req, res, next) => {
     try {
         const { idCart } = req.params;
         const { idProd } = req.params;

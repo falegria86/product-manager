@@ -15,7 +15,7 @@ router.delete('/:cid', controllers.removeCtrl);
 
 router.post('/:idCart/products/:idProd', controllers.addProductToCart);
 
-router.delete('/:idCart/products/:idProd', controllers.removeProducFromCart);
+router.delete('/:idCart/products/:idProd', controllers.removeProductFromCart);
 
 router.put('/:idCart/products/:idProd', controllers.updateProductQuantityToCart);
 

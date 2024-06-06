@@ -68,7 +68,7 @@ export default class CartManager {
         }
     }
 
-    async removeProdFromCart(cartId, prodId) {
+    async removeProductFromCart(cartId, prodId) {
         try {
             return await CartModel.findOneAndUpdate(
                 { _id: cartId },
