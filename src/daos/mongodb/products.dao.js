@@ -1,18 +1,39 @@
 import { ProductModel } from "./models/product.model.js";
 
 export default class ProductManager {
-    async getAllProducts() {
+    async getAllProducts(page = 1, limit = 10, category, sort, status) {
         try {
-            const response = await ProductModel.find({});
-            return response;
+            const filter = {};
+
+            if (category) {
+                filter.category = category;
+            }
+
+            if (status) {
+                filter.status = status;
+            }
+
+            const sortOrder = {};
+
+            if (sort) {
+                if (sort === 'asc') {
+                    sortOrder.price = 1;
+                } else if (sort === 'desc') {
+                    sortOrder.price = -1;
+                }
+            }
+
+            return await ProductModel.paginate(filter, { page, limit, sort: sortOrder });
         } catch (error) {
-            console.log('There was an error getting products: ', error);
+            console.error('There was an error getting products: ', error);
+            throw error;
         }
     }
 
+
     async getProductById(id) {
         try {
-            return ProductModel.findById(id);
+            return await ProductModel.findById(id);
         } catch (error) {
             throw new Error(error);
         }
@@ -29,7 +50,7 @@ export default class ProductManager {
 
     async updateProduct(id, obj) {
         try {
-            return ProductModel.findByIdAndUpdate(id, obj, { new: true });
+            return await ProductModel.findByIdAndUpdate(id, obj, { new: true });
         } catch (error) {
             throw new Error(error);
         }
@@ -37,7 +58,7 @@ export default class ProductManager {
 
     async removeProduct(id) {
         try {
-            return ProductModel.findByIdAndDelete(id);
+            return await ProductModel.findByIdAndDelete(id);
         } catch (error) {
             throw new Error(error);
         }
