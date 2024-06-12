@@ -3,19 +3,21 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import cors from "cors";
+import dotenv from "dotenv";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import userRouter from "./routes/user.router.js";
 import "./daos/mongodb/connection.js";
-import "dotenv/config"
+
+dotenv.config();
 
 const storeConfig = {
     store: MongoStore.create({
-        mongoUrl: process.env.DB_CONNECTION_STRING,
-        crypto: { secret: process.env.SECRET_KEY },
+        mongoUrl: "mongodb+srv://falegria:Goal0408@codercluster.tpintzt.mongodb.net/ecommerce",
+        crypto: { secret: '1234' },
         ttl: 180,
     }),
-    secret: process.env.SECRET_KEY,
+    secret: '1234',
     resave: true,
     saveUninitialized: true,
     cookie: { maxAge: 180000 }
