@@ -44,13 +44,6 @@ export const register = async (req, res) => {
     }
 };
 
-export const visit = (req, res) => {
-    req.session.info && req.session.info.contador++;
-    res.json({
-        message: `${req.session.info.username} ha visitado el sitio ${req.session.info.contador} veces`,
-    });
-};
-
 export const infoSession = (req, res) => {
     res.json({
         session: req.session,
