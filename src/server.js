@@ -11,9 +11,11 @@ import "./daos/mongodb/connection.js";
 
 dotenv.config();
 
+const connectionString = process.env.DB_CONNECTION_STRING;
+
 const storeConfig = {
     store: MongoStore.create({
-        mongoUrl: "mongodb+srv://falegria:Goal0408@codercluster.tpintzt.mongodb.net/ecommerce",
+        mongoUrl: connectionString,
         crypto: { secret: '1234' },
         ttl: 180,
     }),
