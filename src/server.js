@@ -22,7 +22,11 @@ const storeConfig = {
     secret: '1234',
     resave: true,
     saveUninitialized: true,
-    cookie: { maxAge: 180000 }
+    cookie: {
+        maxAge: 180000,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+    }
 };
 
 const app = express();
