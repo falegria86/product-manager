@@ -7,16 +7,17 @@ export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await userDao.login(email, password);
-        if (!user) res.status(401).json({ message: "No estás autorizado" });
-        else {
+        if (!user) {
+            res.status(401).json({ message: "No estás autorizado" });
+        } else {
             req.session.info = {
                 loggedIn: true,
                 email,
-            }
-            res.status(200).json({ message: 'Welcome!' })
+            };
+            res.status(200).json({ message: 'Welcome!', sessionId: req.sessionID });
         }
     } catch (error) {
-        throw new Error(error);
+        res.status(500).json({ message: 'There was an error!' });
     }
 };
 
