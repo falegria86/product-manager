@@ -24,8 +24,8 @@ const storeConfig = {
     saveUninitialized: true,
     cookie: {
         maxAge: 180000,
-        sameSite: 'lax',
-        secure: process.env.NODE_ENV === 'production',
+        // sameSite: 'lax',
+        // secure: process.env.NODE_ENV === 'production',
     }
 };
 
