@@ -1,7 +1,7 @@
 import { ProductModel } from "./models/product.model.js";
 
 export default class ProductManager {
-    async getAllProducts(page = 1, limit = 10, category, sort, status) {
+    async getAllProducts(page = 1, limit = 1000, category, sort, status) {
         try {
             const filter = {};
 
